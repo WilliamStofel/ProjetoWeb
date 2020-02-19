@@ -1,0 +1,82 @@
+﻿@model UserInfoViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cadastro de Detalhes do Usuário</h2>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Salvar" enctype="multipart/form-data">
+            <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+
+            <label for="IdUser" class="control-label">ID do Usuário</label>
+            @if (ViewBag.Operacao == "I")
+            {
+                <input asp-for="IdUser" class="form-control" />
+            }
+            else
+            {
+                <input asp-for="IdUser" class="form-control" readonly />
+            }
+            <span asp-validation-for="IdUser" class="text-danger"></span>
+            <br />
+
+            <label for="Address" class="control-label">Endereço</label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+            <br />
+
+            <label for="City" class="control-label">Cidade</label>
+            <input asp-for="City" class="form-control" />
+            <span asp-validation-for="City" class="text-danger"></span>
+            <br />
+
+            <label for="ZipCode" class="control-label">CEP</label>
+            <input asp-for="ZipCode" class="form-control" />
+            <span asp-validation-for="ZipCode" class="text-danger"></span>
+            <br />
+
+            <label for="CardNumber" class="control-label">Número do Cartão</label>
+            <input asp-for="CardNumber" class="form-control" />
+            <span asp-validation-for="CardNumber" class="text-danger"></span>
+            <br />
+
+            <label for="CardName" class="control-label">Nome do Cartão</label>
+            <input asp-for="CardName" class="form-control" />
+            <span asp-validation-for="CardName" class="text-danger"></span>
+            <br />
+
+            <label for="SecurityNumber" class="control-label">Código de Segurança</label>
+            <input asp-for="SecurityNumber" class="form-control" type="number" />
+            <span asp-validation-for="SecurityNumber" class="text-danger"></span>
+            <br />
+
+            <br />
+            <input type="file" name="Image" id="Image" onchange="showImage()" class="btn btn-secondary">
+            <img id="imgPreview" src="data:image/jpeg;base64,@Model.Base64Image" class="img-responsive" width="200">
+            <span asp-validation-for="Image" class="text-danger"></span>
+            <br />
+
+            <br />
+            <br />
+            <input type="submit" value="Salvar dados" class="btn btn-primary" />
+            <br />
+            <span class="text-danger">@ViewBag.Error</span>
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+    function showImage() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("Image").files[0]);
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("imgPreview").src = oFREvent.target.result;
+        };
+    }
+</script>
+

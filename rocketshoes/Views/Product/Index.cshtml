@@ -1,0 +1,52 @@
+﻿@model List<ProductsViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Listagem de Produtos</h2>
+
+<a href="/product/create">Novo Registro</a>
+<br />
+
+<table class="table table-responsive">
+    <tr>
+        <th>Ações</th>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Preço</th>
+        <th>Gênero</th>
+        <th>Cor</th>
+        <th>Tamanho</th>
+        <th>Marca</th>
+        <th>Categoria</th>
+        <th>Preview da Imagem</th>
+    </tr>
+
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>
+                <a href="/product/Edit?id=@product.Id">Editar</a>
+                <a href="javascript:deleteProduct(@product.Id)">Apagar</a>
+            </td>
+            <td>@product.Id</td>
+            <td>@product.Name</td>
+            <td>@product.Price</td>
+            <td>@product.Gender</td>
+            <td>@product.Color</td>
+            <td>@product.Size</td>
+            <td>@product.BrandId</td>
+            <td>@product.CategoryId</td>
+            <td>
+                <img id="imgPreview" src="data:image/jpeg;base64,@product.Base64Image" class="img-responsive" width="50">
+            </td>
+        </tr>
+    }
+</table>
+
+<script>
+    function deleteProduct(id) {
+        if (confirm('Confirma a exclusão do registro?'))
+            location.href = '/product/Delete?id=' + id;
+    }
+</script>

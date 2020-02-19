@@ -1,0 +1,50 @@
+﻿@model List<UserInfoViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Listagem de Informações do Usuário</h2>
+
+<a href="/userinfo/create">Novo Registro</a>
+<br />
+
+<table class="table table-responsive">
+    <tr>
+        <th>Ações</th>
+        <th>ID do Usuário</th>
+        <th>Endereço</th>
+        <th>Cidade</th>
+        <th>CEP</th>
+        <th>Número do Cartão</th>
+        <th>Nome do Cartão</th>
+        <th>Código de Segurança</th>
+        <th>Preview da Imagem</th>
+    </tr>
+
+    @foreach (var userInfo in Model)
+    {
+        <tr>
+            <td>
+                <a href="/userinfo/Edit?id=@userInfo.Id">Editar</a>
+                <a href="javascript:deleteUserInfo(@userInfo.Id)">Apagar</a>
+            </td>
+            <td>@userInfo.IdUser</td>
+            <td>@userInfo.Address</td>
+            <td>@userInfo.City</td>
+            <td>@userInfo.ZipCode</td>
+            <td>@userInfo.CardNumber</td>
+            <td>@userInfo.CardName</td>
+            <td>@userInfo.SecurityNumber</td>
+            <td>
+                <img id="imgPreview" src="data:image/jpeg;base64,@userInfo.Base64Image" class="img-responsive" width="50">
+            </td>
+        </tr>
+    }
+</table>
+
+<script>
+    function deleteUserInfo(id) {
+        if (confirm('Confirma a exclusão do registro?'))
+            location.href = '/userinfo/Delete?id=' + id;
+    }
+</script>

@@ -1,0 +1,40 @@
+﻿@model List<BrandsViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Listagem de Marcas</h2>
+
+<a href="/brand/create">Novo Registro</a>
+<br />
+
+<table class="table table-responsive">
+    <tr>
+        <th>Ações</th>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Preview da Imagem</th>
+    </tr>
+
+    @foreach (var brand in Model)
+    {
+        <tr>
+            <td>
+                <a href="/brand/Edit?id=@brand.Id">Editar</a>
+                <a href="javascript:deleteBrand(@brand.Id)">Apagar</a>
+            </td>
+            <td>@brand.Id</td>
+            <td>@brand.Name</td>
+            <td>
+                <img id="imgPreview" src="data:image/jpeg;base64,@brand.Base64Image" class="img-responsive" width="50">
+            </td>
+        </tr>
+    }
+</table>
+
+<script>
+    function deleteBrand(id) {
+        if (confirm('Confirma a exclusão do registro?'))
+            location.href = '/brand/Delete?id=' + id;
+    }
+</script>

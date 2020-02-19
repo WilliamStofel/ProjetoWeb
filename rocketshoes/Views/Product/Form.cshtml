@@ -1,0 +1,87 @@
+﻿@model ProductsViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cadastro de Novo Calçado</h2>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Salvar" enctype="multipart/form-data">
+            <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+
+            <label for="Id" class="control-label">ID</label>
+            @if (ViewBag.Operacao == "I")
+            {
+                <input asp-for="Id" class="form-control" />
+            }
+            else
+            {
+                <input asp-for="Id" class="form-control" readonly />
+            }
+            <span asp-validation-for="Id" class="text-danger"></span>
+            <br />
+
+            <label for="Name" class="control-label">Nome</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+            <br />
+
+            <label for="Price" class="control-label">Preço</label>
+            <input asp-for="Price" class="form-control" type="number" step=".01" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+            <br />
+
+            <label for="Gender" class="control-label">Gênero</label>
+            <select asp-for="Gender" asp-items="ViewBag.Genders" class="form-control"> </select>
+            <span asp-validation-for="Gender" class="text-danger"></span>
+            <br />
+
+            <label for="Color" class="control-label">Cor</label>
+            <input asp-for="Color" class="form-control" />
+            <span asp-validation-for="Color" class="text-danger"></span>
+            <br />
+
+            <label for="Size" class="control-label">Tamanho</label>
+            <input asp-for="Size" class="form-control" type="number" step=".01" />
+            <span asp-validation-for="Size" class="text-danger"></span>
+            <br />
+
+            <label for="BrandId" class="control-label">Marca</label>
+            <select asp-for="BrandId" asp-items="ViewBag.Brands" class="form-control"> </select>
+            <span asp-validation-for="BrandId" class="text-danger"></span>
+            <br />
+
+            <label for="CategoryId" class="control-label">Categoria</label>
+            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control"> </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+            <br />
+
+            <br />
+            <input type="file" name="Image" id="Image" onchange="showImage()" class="btn btn-secondary">
+            <img id="imgPreview" src="data:image/jpeg;base64,@Model.Base64Image" class="img-responsive" width="200">
+            <span asp-validation-for="Image" class="text-danger"></span>
+            <br />
+
+            <br />
+            <br />
+            <input type="submit" value="Salvar dados" class="btn btn-primary" />
+            <br />
+            <span class="text-danger">@ViewBag.Error</span>
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+    function showImage() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("Image").files[0]);
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("imgPreview").src = oFREvent.target.result;
+        };
+    }
+</script>
+
